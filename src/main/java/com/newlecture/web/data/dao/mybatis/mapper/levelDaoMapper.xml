@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.newlecture.web.data.dao.LevelDao">
+
+	<select id="getLevelOfLecture" resultType="com.newlecture.web.data.entity.Level">
+		SELECT LEVEL.*
+		FROM LEVEL INNER JOIN LECTURE 
+		ON LEVEL.CODE=LECTURE.LEVEL_CODE
+		WHERE LECTURE.CODE=#{lectureCode}
+	</select>
+
+   <select id="getList" resultType="com.newlecture.web.data.entity.Level">
+      SELECT `LEVEL`.`CODE`,
+      `LEVEL`.`NAME`
+      FROM `newlecture`.`LEVEL`
+   </select>
+   
+   <select id="get" resultType="com.newlecture.web.data.entity.Level">
+      SELECT `LEVEL`.`CODE`,
+      `LEVEL`.`NAME`
+      FROM `newlecture`.`LEVEL`
+      WHERE CODE=#{code}
+   </select>
+
+   <insert id="add" parameterType="com.newlecture.web.data.entity.Level">
+      <selectKey order="BEFORE" keyProperty="code" resultType="String">
+         SELECT MAX(CAST(CODE AS UNSIGNED))+1 CODE FROM LEVEL
+      </selectKey>
+         INSERT INTO `newlecture`.`LEVEL`
+         (`CODE`,
+         `NAME`)
+         VALUES
+         (
+         #{code},
+         #{name}
+         )
+   </insert>
+   
+   <update id="update" parameterType="com.newlecture.web.data.entity.Level">
+      UPDATE `newlecture`.`LEVEL`
+      SET
+      `CODE` = #{code},
+      `NAME` = #{name}
+      WHERE `CODE` = #{code}
+
+   </update>
+   
+   <delete id="delete" >
+      DELETE FROM `newlecture`.`LEVEL`
+      WHERE #{code}
+   </delete>
+   
+</mapper>

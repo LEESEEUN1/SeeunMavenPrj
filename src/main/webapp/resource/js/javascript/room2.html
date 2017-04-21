@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<style>
+
+    @keyframes zoom-in{
+
+        from{
+          
+        }
+        
+        50%{
+            width:1000px;
+        }
+
+        to{
+            width:600px;
+        }
+
+    }
+
+    #jaega{
+        width:700px;
+        height: 500px;
+        border: 1px solid indigo;
+    }
+
+    #toolbar{
+        background:grey;
+        height: 100px 
+    }
+
+    #room{
+        position:relative;
+        background: yellow;
+        height: 400px;
+    }
+
+    #room div{
+        position:absolute;
+        left:100px;
+        top:10px;
+        width: 50px;
+        height: 50px;
+        background: green;
+        border-radius: 10;
+        box-shadow: 2px 2px 1px #6e6e6e;
+
+        transition-duration: 0.5s;
+        transition-property: left,top;
+        transition-timing-function: ease-out, ease-out;
+        transition-delay: 1s;
+
+        /* transition-duration:1.2s; 
+        transition-property:all;
+        transition-delay: 1s;
+        transition-timing-function:steps(3, start); */
+    }
+
+    /*#rootm div:hover{
+        animation-name: zoom-in;
+        animation-duration: 5s;
+        animation-direction: reverse;
+        transform-origin:center ;
+        transform:skew(53deg, 9deg);
+        height: 300px; 
+        width: 200px;
+        
+        transform:rotate(180deg);
+        background:red;
+        transform:rotate(7.5deg);
+        
+    }*/
+
+</style>
+
+<script>
+    window.addEventListener("load",function(){
+
+        var divs = document.querySelectorAll("#room div");       
+        
+        var room = document.querySelector("#room");
+
+        room.onclick = function(){
+            if(event.target===event.currentTarget){
+                 return;
+             }
+             event.target.style.border = "2px solid blue";
+             event.currentTarget.style.border="2px solid red";
+             alert("Hello");
+             //클릭되는 것은 target
+             //처리하는 것은 current target
+        }
+
+        /*for(var i=0; i<divs.length;i++){
+            divs[i].onclick = function(){
+                alert("Hello");
+            }
+        }*/
+        
+        var zoomInButton = document.querySelector("#zoom-in-button");
+        zoomInButton.onclick = function(){
+            for(var i=0; i<divs.length;i++){
+            divs[i].style.left=divs[i].dataset.dx;
+            divs[i].style.top=divs[i].dataset.dy;
+            divs[i].style.transform="rotate(360deg)";
+            divs[i].style.transitionDelay=(i/3)+"s";
+            }
+        };
+    });
+
+ /*   window.addEventListener("load",function(){
+
+        var zoomInButton = document.querySelector("#zoom-in-button");
+        zoomInButton.onclick = function(){
+            var divs = document.querySelectorAll("#rootm div");
+            var poses = [
+                {left:'100px', top:'200px'},
+                {left:'300px', top:'200px'},
+                {left:'500px', top:'200px'},
+            ]
+            for(var i in divs){
+                divs[i].animate([
+	                {left:divs[i].offsetLeft+'px', top:divs[i].offsetTop+'px'},
+	                poses[i]
+                ], 1000);
+            }
+
+            /*div.style.animationName="zoom-in";
+            div.style["animation-duration"]="1s";
+            alert(div.offsetLeft);
+           div.animate([
+                {left:div.offsetLeft+'px', top:div.offsetTop+'px'},
+                {left:'200px',top:'200px'}
+            ], 1000);
+
+            div.style.left="200px";
+            div.style.top="200px";
+
+        };
+
+    });*/
+
+</script>
+
+</head>
+<body>
+    <h1>교실</h1>
+	<div id="jaega">
+		<div id="toolbar">
+            <input id="zoom-in-button" type="button" value="zoom-in"/>
+		</div>
+		<div id="room">
+			<div data-sx="" data-sy="" data-dx="80px" data-dy="100px">1</div>
+			<div data-sx="" data-sy="" data-dx="90px" data-dy="100px">2</div>
+			<div data-sx="" data-sy="" data-dx="100px" data-dy="100px">3</div>
+			<div data-sx="" data-sy="" data-dx="110px" data-dy="100px">4</div>
+			<div data-sx="" data-sy="" data-dx="100px" data-dy="200px">5</div>
+			<div data-sx="" data-sy="" data-dx="220px" data-dy="200px">6</div>
+			<div data-sx="" data-sy="" data-dx="340px" data-dy="200px">7</div>
+			<div data-sx="" data-sy="" data-dx="460px" data-dy="200px">8</div>
+			<div data-sx="" data-sy="" data-dx="100px" data-dy="100px">9</div>
+			<div data-sx="" data-sy="" data-dx="100px" data-dy="100px">10</div>
+			<div data-sx="" data-sy="" data-dx="100px" data-dy="100px">11</div>
+			<div data-sx="" data-sy="" data-dx="100px" data-dy="100px">12</div>
+			<div data-sx="" data-sy="" data-dx="100px" data-dy="100px">13</div>
+			<div data-sx="" data-sy="" data-dx="100px" data-dy="100px">14</div>
+			<div data-sx="" data-sy="" data-dx="100px" data-dy="100px">15</div>
+			<div data-sx="" data-sy="" data-dx="100px" data-dy="100px">16</div>
+			<div data-sx="" data-sy="" data-dx="100px" data-dy="100px">17</div>
+			<div data-sx="" data-sy="" data-dx="100px" data-dy="100px">18</div>
+			<div data-sx="" data-sy="" data-dx="100px" data-dy="100px">19</div>
+			<div data-sx="" data-sy="" data-dx="100px" data-dy="100px">20</div>
+			
+		</div>
+	</div>
+</body>
+</html>

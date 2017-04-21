@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script type="text/javascript">
+	$(function(){
+		var img = $('<img/>');
+		img.attr("src","../../images/1.jpg");
+		var td = $("table tr:nth-child(3) td");
+		img.appendTo(td);
+		
+		$("#btn1").click(function(){
+			
+			img
+			.animate({
+				width:"900px",
+				color:"red",
+				opacity:0.5
+				
+			},1000)
+			.queue(function(){
+				img
+				.attr("src","../../images/2.jpg")
+				.css("border","2px solid red")
+				.dequeue();
+			})
+			.delay(500)
+			.animate({
+				width:"300px"
+			},1000, function(){
+				img.clone().appendTo(td);
+			},{
+				duration:500,
+				queue:false
+				step: function( now, fx ){
+    			var data = fx.elem.id + " " + fx.prop + ": " + now;
+    			$( "body" ).append( "<div>" + data + "</div>" );
+  				}
+			});
+			
+			//버퍼에 담는 작업 queue
+
+			//animate는 color, border 적용 안됨
+			/* if(td.children().length==0)
+				img.appendTo(td).parent().parent().parent().clone().appendTo(td);
+			else
+				img.detach(); */
+			
+			//append > td.append(img)
+			//appendTo > img.appendTo(td);
+			//표기법만 달라지는 것일 뿐 실행결과는 똑같다
+			
+			//$("table tr:nth-child(3) td").append(img);
+			
+			/* var img = $('<img/>');
+			img.attr("src","../../images/1.jpg");
+			
+			$("table tr:nth-child(3) td").append(img); */
+			/* {
+				src: '../../images/1.jpg',
+			}).css({
+				border: '1px solid black',
+				padding: '12px 12px 20px 12px',
+				backgroundColor: 'white'
+			}).appendTo('body'); */
+		});
+	});
+</script>
+</head>
+<body>
+	<form>
+		<table>
+			<tr>
+				<th>제목</th>
+				<td><input type="text"/></td>
+			</tr>
+			<tr>
+				<th>분류</th>
+				<td>
+					<select>
+						<option>유머게시판</option>
+						<option>경쭈게시판</option>
+						<option>야인게시판</option>
+					</select>
+				</td>
+			</tr>
+			<tr>
+				<th></th>
+				<td></td>
+			</tr>
+			<tr>
+				<td><input id="btn1" type="button" value="버튼"/></td>
+			</tr>
+		</table>
+	</form>
+</body>
+</html>

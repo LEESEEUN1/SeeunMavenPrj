@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.newlecture.web.data.dao.PlatformDao">
+
+
+	<select id="getListOfLecture" resultType="com.newlecture.web.data.entity.Platform">
+	SELECT P.*
+      FROM
+      PLATFORM P 
+      INNER JOIN LECTURE_PLATFORM LP ON P.CODE = LP.PLATFORM_CODE
+      INNER JOIN LECTURE T ON LP.LECTURE_CODE = T.CODE
+      WHERE T.CODE = #{lectureCode}
+	</select>
+
+   <select id="getList" resultType="com.newlecture.web.data.entity.Platform">
+      SELECT `PLATFORM_VER`.`CODE`,
+      `PLATFORM_VER`.`NAME`,
+      `PLATFORM_VER`.`PLATFORM_CODE`,
+      FROM `newlecture`.`PLATFORM_VER`
+   </select>
+   
+   <select id="get" resultType="com.newlecture.web.data.entity.Platform">
+      SELECT `PLATFORM_VER`.`CODE`,
+      `PLATFORM_VER`.`NAME`,
+      `PLATFORM_VER`.`PLATFORM_CODE`,
+      FROM `newlecture`.`PLATFORM_VER`
+      WHERE CODE=#{code}
+   </select>
+   
+   <insert id="add" >
+      <selectKey order="BEFORE" keyProperty="code" resultType="String">
+         SELECT MAX(CAST(CODE AS UNSIGNED))+1 CODE FROM NOTICE
+      </selectKey>
+      INSERT INTO `newlecture`.`PLATFORM_VER`
+      (
+         `CODE`,
+         `NAME`,
+         `PLATFORM_CODE`
+      )
+      VALUES
+      (      
+         #{code},
+         #{name},
+         #{platform_code}
+      );
+   </insert>
+   
+   <update id="update">
+      UPDATE `newlecture`.`PLATFORM_VER`
+      SET
+      `CODE` = #{code},
+      `NAME` = #{name},
+      `PLATFORM_CODE` = #{platform_code}
+      WHERE `CODE` = #{code}
+   </update>
+   
+   <delete id="delete">
+      DELETE FROM `newlecture`.`PLATFORM_VER`
+      WHERE CODE=#{code}
+   </delete>
+   
+</mapper>

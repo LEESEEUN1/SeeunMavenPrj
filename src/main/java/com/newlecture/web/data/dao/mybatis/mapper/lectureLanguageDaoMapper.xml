@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.newlecture.web.data.dao.LectureLanguageDao">
+   
+   <select id="getList" resultType="com.newlecture.web.data.entity.LectureLanguage">
+		SELECT LECTURE_CODE lectureCode, LANGUAGE_CODE languageCode
+		FROM LECTURE_LANGUAGE
+		WHERE LECTURE_CODE=#{lectureCode}
+   </select>
+   
+    <insert id="add" parameterType="com.newlecture.web.data.entity.LectureLanguage">
+      INSERT INTO `newlecture`.`LECTURE_LANGUAGE`
+      (
+      `LECTURE_CODE`,
+      `LANGUAGE_CODE`
+      )
+      VALUES
+      (
+      #{lectureCode},
+      #{languageCode
+      )
+
+   </insert>
+   
+   <update id="update" parameterType="com.newlecture.web.data.entity.LectureLanguage">
+      UPDATE `newlecture`.`LECTURE_LANGUAGE`
+      SET
+         `VER_CODE` = #{ver_code},
+         `LECTURE_CODE` = #{lecture_code},
+         `LANGUAGE_VER_CODE` = #{language_ver_code}
+      WHERE LECTURE_CODE=#{param1} AND LANGUAGE_CODE = #{param2};
+
+   </update>
+
+   <delete id="delete">
+      DELETE FROM `newlecture`.`LECTURE_LANGUAGE`
+      WHERE LECTURE_CODE=#{param1} AND LANGUAGE_CODE = #{param2};
+   
+   </delete>
+</mapper>

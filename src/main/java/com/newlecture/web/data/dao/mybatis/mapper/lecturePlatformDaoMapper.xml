@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.newlecture.web.data.dao.LecturePlatformDao">
+
+   <select id="getList" resultType="com.newlecture.web.data.entity.LecturePlatform">
+      SELECT `LECTURE_PLATFORM`.`PLATFORM_CODE`,
+          `LECTURE_PLATFORM`.`LECTURE_CODE`
+      FROM `newlecture`.`LECTURE_PLATFORM`
+
+   </select>
+   
+   <select id="get" resultType="com.newlecture.web.data.entity.LecturePlatform">
+      SELECT `LECTURE_PLATFORM`.`PLATFORM_CODE`,
+          `LECTURE_PLATFORM`.`LECTURE_CODE`
+      FROM `newlecture`.`LECTURE_PLATFORM`
+      WHERE PLATFORM_CODE=#{param1} AND LECTURE_CODE=#{param2}
+   </select>
+
+   <insert id="add" parameterType="com.newlecture.web.data.entity.LecturePlatform">
+      INSERT INTO `newlecture`.`LECTURE_PLATFORM`
+      (
+      PLATFORM_CODE,
+      LECTURE_CODE
+      )
+      VALUES
+      (
+      #{platfromCode},
+      #{lectureCode}
+      )
+   </insert>
+   
+   <update id="update" parameterType="com.newlecture.web.data.entity.LecturePlatform">
+<!--          <selectKey order="BEFORE" keyProperty="platfromCode" resultType="String">
+            SELECT PLATFORM_CODE 
+            FROM LECTURE_PLATFORM
+            WHERE  
+         </selectKey> -->
+      UPDATE `newlecture`.`LECTURE_PLATFORM`
+      SET
+      `PLATFORM_CODE` = #{platformCode},
+      `LECTURE_CODE` = #{lectureCode}
+<!--       WHERE `PLATFORM_CODE` = #{param2}
+      AND `LECTURE_CODE` = #{param3} -->
+   </update>
+   
+   <delete id="delete" >
+      DELETE FROM `newlecture`.`LECTURE_PLATFORM`
+            WHERE PLATFORM_CODE=#{param1} AND LECTURE_CODE=#{param2}
+   </delete>
+   
+</mapper>

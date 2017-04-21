@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans:beans xmlns:beans="http://www.springframework.org/schema/beans"
+	xmlns="http://www.springframework.org/schema/security" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="
+       http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd                
+        http://www.springframework.org/schema/security
+        http://www.springframework.org/schema/security/spring-security.xsd">
+
+	<beans:bean id="successHandler" class="com.newlecture.web.handler.NewlecSuccessHandler"/>
+	<!-- id는 리얼네임, name은 별칭 id="successHandler" name="a b c d" 이렇게 id로도 부를 수 있고 name으로도 가능, name은 여러개 지정 가능 
+		 id는 중복이 불가능 하지만 name은 중복이 가능하다 name은 키값을 전달하는 전달자로서 중복이 가능하지만 id는 중복이 불가능! -->
+	
+	<!-- 인증에 성공했다면 handler를통해 할 것이 있따면 무언가를 할 수 있음 -->
+	<!-- intercept 가 어떠한 역할자(access)만 이url로 갈수 있다고 지정해주는 것 -->
+	<http use-expressions="true">
+		<form-login login-page="/joinus/login" 
+			default-target-url="/joinus/mypage" 
+			/>
+		<logout logout-success-url="/index"/>
+		<intercept-url pattern="/joinus/mypage" access="hasRole('ROLE_USER')" />
+		<intercept-url pattern="/customer/notice-detail" access="hasRole('ROLE_USER')" />
+		<intercept-url pattern="/admin/**" access="hasRole('ROLE_ADMIN')" />
+		<intercept-url pattern="/teacher/**" access="hasRole('ROLE_TEACHER')" />
+	</http>
+
+	<authentication-manager>
+		<authentication-provider>
+			<!-- 유저를 쿼리하는 쿼리문이 필요 -->
+			<jdbc-user-service data-source-ref="dataSource"
+	            users-by-username-query="SELECT ID userid, PWD password, 1 enabled FROM MEMBER WHERE ID=?"
+	            authorities-by-username-query="SELECT MEMBER_ID userid, ROLE_ID authorities FROM MEMBER_ROLE WHERE MEMBER_ID=?"/>
+			<!-- <user-service>
+				<user name="newlec" password="111" authorities="ROLE_USER, ROLE_TEACHER, ROLE_ADMIN" />
+				<user name="test" password="111" authorities="ROLE_USER" />
+				<user name="LSE" password="111" authorities="ROLE_USER, ROLE_TEACHER" />
+			</user-service> -->
+		</authentication-provider>
+	</authentication-manager>
+
+</beans:beans>

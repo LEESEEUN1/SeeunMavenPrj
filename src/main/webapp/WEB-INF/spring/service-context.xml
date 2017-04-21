@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="
+        http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context.xsd">
+
+	<bean name="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+       <property name="driverClassName"  value="com.mysql.jdbc.Driver"/>
+       <property name="url" value="jdbc:mysql://211.238.142.84/newlecture?autoReconnect=true&amp;useSSL=false&amp;characterEncoding=UTF-8"/>
+       <property name="username" value="newlec" />
+       <property name="password" value="sclass"/>
+    </bean>
+
+	<bean id="sqlSession" class="org.mybatis.spring.SqlSessionTemplate">
+		<constructor-arg index="0" ref="sqlSessionFactory" />
+	</bean>
+	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="dataSource" ref="dataSource" />
+		<property name="mapperLocations" value="classpath:com/newlecture/web/data/dao/mybatis/mapper/*.xml"></property>
+	</bean>
+	
+	<bean class="com.newlecture.web.dao.mybatis.MyBatisLanguageDao"/>
+	<bean class="com.newlecture.web.dao.mybatis.MyBatisLectureDao"/>
+	<bean class="com.newlecture.web.dao.mybatis.MyBatisLectureLanguageDao"/>
+	<bean class="com.newlecture.web.dao.mybatis.MyBatisLecturePlatformDao"/>
+	<bean class="com.newlecture.web.dao.mybatis.MyBatisLevelDao"/>
+	<bean class="com.newlecture.web.dao.mybatis.MyBatisMemberDao"/>
+	<bean class="com.newlecture.web.dao.mybatis.MyBatisMemberRoleDao"/>
+	<bean class="com.newlecture.web.dao.mybatis.MyBatisNoticeDao"/>
+	<bean class="com.newlecture.web.dao.mybatis.MyBatisNoticeFileDao"/>
+	<bean class="com.newlecture.web.dao.mybatis.MyBatisPlatformDao"/>
+	
+	
+	<!-- adminservice와 teacherservice는 컨트롤러가 아니고 일반 클래스이기 때문에 autowired를 쓰기 위해서는 context:annotation-config설정이 필요하다
+	그리고 context를 쓰기 위해서 위에서도 bean설정 뿐만 아니라 context설정도 같이 해줘야 한다 -->
+	<context:annotation-config/>
+	<bean class="com.newlecture.web.service.AdminService"/>
+	<bean class="com.newlecture.web.service.TeacherService"/>
+	<!-- customer 콩 -->
+    <!-- <bean class="com.newlecture.web.data.mysql.MYSQLNoticeDao"/>
+	<bean class="com.newlecture.web.data.mysql.MySQLNoticeFileDao"/>
+	joinus 콩
+	<bean class="com.newlecture.web.data.dao.MemberDao"/>
+    <bean class="com.newlecture.web.data.mysql.MYSQLMemberRoleDao"/> -->
+
+</beans>     

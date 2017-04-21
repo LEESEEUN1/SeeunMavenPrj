@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.newlecture.web.data.dao.LectureDao">
+    <select id="getList" resultType="com.newlecture.web.data.entity.Lecture">
+      SELECT *
+      FROM `newlecture`.`LECTURE`
+      WHERE ${param2} LIKE '%${param3}%'
+   </select>
+   <!-- $는 ''가 오지 않고, #은 자동으로 ''가 들어간다. -->
+   
+    <select id="get" resultType="com.newlecture.web.data.entity.Lecture">
+      SELECT * 
+      FROM `newlecture`.`LECTURE`
+      WHERE CODE= #{code}
+   </select>
+   
+   <select id="getSize" resultType="Integer">
+  	 SELECT COUNT(CODE) FROM LECTURE
+  	 WHERE ${param1} LIKE '%${param2}%'
+   </select>
+   
+   <delete id="delete">   
+      DELETE FROM `newlecture`.`LECTURE`
+      WHERE CODE=#{code}
+   </delete>
+   
+   <!-- 객체를 전달받았을 때 사용법 -> el표기법과 비슷하다. -->
+   <!-- getter 가져오는 el표기법과 유사함. -->
+   
+   <update id="update">
+      UPDATE `newlecture`.`LECTURE`
+      SET
+      `CODE` = #{code},
+      `TITLE` = #{title},
+      `CONTEXT` = #{context},
+      `TEACHER_NAME` = #{teacherName},
+      `BOOK_NAME` = #{bookName},
+      `BOOK_IMG` =  #{bookImg},
+      `TARGET` =  #{target},
+      `IMPACT_CONTEXT` =  #{impactContext},
+      `MEMBER_ID` = #{memberId},
+      `LEVEL_CODE` = #{levelCode}
+      WHERE `CODE` = #{code}
+   </update>
+   
+   <insert id="add" parameterType="com.newlecture.web.data.entity.Lecture">
+      <selectKey order="BEFORE" keyProperty="code" resultType="String">
+         SELECT MAX(CAST(CODE AS UNSIGNED))+1 CODE 
+         FROM `newlecture`.`LECTURE`
+      </selectKey>
+         INSERT INTO `newlecture`.`LECTURE`
+         (`CODE`,
+         `TITLE`,
+         `CONTEXT`,
+         `TEACHER_NAME`,
+         `BOOK_NAME`,
+         `BOOK_IMG`,
+         `TARGET`,
+         `IMPACT_CONTEXT`,
+         `MEMBER_ID`,
+         `LEVEL_CODE`)
+         VALUES
+         (#{code},
+         #{title},
+         #{context},
+         #{teacherName},
+         #{bookName},
+         #{bookImg},
+         #{target},
+         #{impactContext},
+         #{memberId},
+         #{levelCode})
+         
+   </insert>
+   
+</mapper>
